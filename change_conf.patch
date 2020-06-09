@@ -1,0 +1,64 @@
+diff --git a/config/database.php b/config/database.php
+index b42d9b3..e749c64 100644
+--- a/config/database.php
++++ b/config/database.php
+@@ -2,6 +2,28 @@
+ 
+ use Illuminate\Support\Str;
+ 
++    /*
++    |--------------------------------------------------------------------------
++    | Code to get content of docker secret file and use it within laravel
++    |--------------------------------------------------------------------------
++    |
++    | Adopted from "Using Docker secrets with Laravel" hosted at:
++    |			 https://iwader.co.uk/post/using-docker-secrets-laravel
++    |
++    */
++	
++function docker_secret(string $name): string
++{
++    return trim(file_get_contents('/run/secrets/' . $name));
++}
++
++function docker_secret_callable(string $name): Closure
++{
++    return function () use ($name) {
++        return docker_secret($name);
++    };
++}
++
+ return [
+ 
+     /*
+@@ -48,9 +70,9 @@ return [
+             'url' => env('DATABASE_URL'),
+             'host' => env('DB_HOST', '127.0.0.1'),
+             'port' => env('DB_PORT', '3306'),
+-            'database' => env('DB_DATABASE', 'forge'),
+-            'username' => env('DB_USERNAME', 'forge'),
+-            'password' => env('DB_PASSWORD', ''),
++            'database' => env('DB_DATABASE','textograph'),
++            'username' => env('DB_USERNAME', docker_secret_callable(env('DB_USERNAME_FILE',''))),
++            'password' => env('DB_PASSWORD', docker_secret_callable(env('DB_PASSWORD_FILE',''))),
+             'unix_socket' => env('DB_SOCKET', ''),
+             'charset' => 'utf8mb4',
+             'collation' => 'utf8mb4_unicode_ci',
+@@ -68,9 +90,9 @@ return [
+             'url' => env('DATABASE_URL'),
+             'host' => env('DB_HOST', '127.0.0.1'),
+             'port' => env('DB_PORT', '5432'),
+-            'database' => env('DB_DATABASE', 'forge'),
+-            'username' => env('DB_USERNAME', 'forge'),
+-            'password' => env('DB_PASSWORD', ''),
++            'database' => env('DB_DATABASE', 'textograph'),
++            'username' => env('DB_USERNAME', docker_secret_callable(env('DB_USERNAME_FILE',''))),
++            'password' => env('DB_PASSWORD', docker_secret_callable(env('DB_PASSWORD_FILE',''))),
+             'charset' => 'utf8',
+             'prefix' => '',
+             'prefix_indexes' => true,
+@@ -145,3 +167,4 @@ return [
+     ],
+ 
+ ];
++
