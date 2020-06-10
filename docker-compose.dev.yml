@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  laravelsrv:    
+    volumes: 
+        - bindvol:/var/www/html
+volumes:
+    bindvol:
+        driver: local
+        driver_opts:
+            type: none
+            o: bind
+            # where your develpement folder in the host resides
+            # it must be an empty folder and docker will fill it with container's html folder
+            device: /var/www/html/laravel-docker
+

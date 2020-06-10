@@ -1,0 +1,47 @@
+networks:
+  proxy:
+    external: true
+    name: proxy
+secrets:
+  mysql_pass:
+    external: true
+    name: mysql_pass
+  mysql_user:
+    external: true
+    name: mysql_user
+services:
+  laravelsrv:
+    build:
+      args:
+        uid: '994'
+        user: nginx
+      context: /home/mahdi/Documents/Programming/my-dockers/textograph-server
+      dockerfile: Dockerfile
+    container_name: textograph-app
+    deploy:
+      replicas: 1
+    environment:
+      DB_CONNECTION: mysql
+      DB_DATABASE: test_12
+      DB_HOST: 192.168.1.10
+      DB_PASSWORD_FILE: mysql_pass
+      DB_PORT: '3306'
+      DB_USERNAME_FILE: mysql_user
+    image: amsaravi/textograph-server
+    networks:
+      proxy: {}
+    ports:
+    - published: 8000
+      target: 8000
+    - published: 9000
+      target: 9000
+    - published: 8300
+      target: 9000
+    restart: unless-stopped
+    secrets:
+    - source: mysql_pass
+    - source: mysql_user
+    user: nginx
+    working_dir: /var/www/html
+version: '3.7'
+

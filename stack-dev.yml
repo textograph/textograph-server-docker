@@ -1,12 +1,10 @@
 version: "3.7"
 services:
-  laravel:
-    secrets:
-        - mysql_pass
-        - mysql_user
-    deploy:
-      placement:
-        constraints: [node.labels.name == mahdi-pc]  
+  laravelsrv:
+    deploy:      
+      replicas: 3
+      # placement:
+      #   constraints: [node.labels.name == mahdi-pc]  
     networks:
       - proxy
 secrets:
