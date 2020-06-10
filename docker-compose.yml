@@ -2,46 +2,28 @@ version: "3.7"
 services:
   laravel:
     user: nginx
-    # deploy:
-    #   placement:
-    #     constraints: [node.labels.name == mahdi-pc]  
     build:      
       args:
         user: nginx
         uid: 994
       context: .
       dockerfile: Dockerfile
-    image: textograph
+    image: amsaravi/textograph-server
     container_name: textograph-app
     restart: unless-stopped
     working_dir: /var/www/html
     ports:
       - 8300:9000
       - 8000:8000
-    secrets:
-      - mysql_pass
-      - mysql_user
     environment: 
       - DB_CONNECTION=mysql
-      - DB_HOST=db
+      - DB_HOST=192.168.1.10
       - DB_PORT=3306
-      - DB_DATABASE=texto_graph
+      - DB_DATABASE=texto_graph3
       # uncomment these lines just for developement purpose
-      # - DB_USERNAME=your_username
-      # - DB_PASSWORD=your_pass
-      - DB_USERNAME_FILE=mysql_user
-      - DB_PASSWORD_FILE=mysql_pass   
+      - DB_USERNAME=your-db-user
+      - DB_PASSWORD=your-db-user-pass
+      # - DB_USERNAME_FILE=mysql_user
+      # - DB_PASSWORD_FILE=mysql_pass   
     # volumes:
     #    - ./database.php:/var/www/html/config/database.php
-    networks:
-      - proxy
-secrets:
-  mysql_pass:
-    external: true
-  mysql_user:
-    external: true
-networks:
-  proxy:
-    external: true
-
-      

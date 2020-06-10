@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  laravel:
+    secrets:
+        - mysql_pass
+        - mysql_user
+    deploy:
+      placement:
+        constraints: [node.labels.name == mahdi-pc]  
+    networks:
+      - proxy
+secrets:
+  mysql_pass:
+    external: true
+  mysql_user:
+    external: true
+networks:
+  proxy:
+    external: true
+
+      
