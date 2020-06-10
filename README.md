@@ -11,7 +11,7 @@
 
 # Installation
 
-## Dockerize your own app
+## Dockerize your own laravel app
 1. Clone this repo:
 ```
 https://github.com/textograph/textograph-server-docker.git
