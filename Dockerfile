@@ -14,4 +14,4 @@ COPY change_conf.patch .
 RUN git apply change_conf.patch
 RUN php artisan key:generate
 RUN sed -E -i "s/^DB_//g" .env
-RUN chown $user ./ -R
+# RUN chown $user ./ -R
