@@ -4,7 +4,7 @@ RUN git clone https://github.com/textograph/textograph-server.git html
 ARG user=nginx
 USER $user
 WORKDIR /var/www/html
-RUN composer update
+RUN composer install
 
 ## uncomment to automatically install in your laravel apps
 # RUN composer require vkovic/laravel-commando
