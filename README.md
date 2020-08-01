@@ -1,5 +1,5 @@
 # Notes
-1. Docker image of [textograph json saver](https://github.com/textograph/textograph-server) (a simple serverside json save and retriever) based on laravel
+1. Docker image of [textograph server](https://github.com/textograph/textograph-server) (a simple serverside json save and retriever) based on laravel that serves as a json saver for [Textograph web app](https://github.com/textograph/textograph).
 2. You can use this repo to containerize your laravel app, just change repo name in `git clone` in Dockerfile
 3. Made some changes to `config/database.php` to allow swarm secret files in laravel. it also removes all of the .env entries begining with `DB_` that allows me to define them later using dockers environment variables.
 4. When building `Dockerfile`, composer will install your laravel package requirements
